@@ -1,0 +1,226 @@
+github地址： https://github.com/hymanHu/Template.git
+spring
+	1、从面到点的方式
+		一系列功能的集成者，spring mvc、spring boot、spring cloud、spring security、data access template、unit test……
+		ioc：控制反转，谁控制了谁（容器控制了bean的生命周期）？怎么反转的？（从new的方式，到依赖注入）
+		aop：业务流，公用的逻辑、抽取行程独立的切面、横切的方式切入到指定位置；
+		事务
+	2、核心包
+		core：
+		aop
+		data access
+		web
+		test
+MVC
+	M（model）、V（view）、C（controller）
+	view --- controller ---- service ---- data access（sql、nosql） ---- service ---- controlle ---- view
+Maven
+	eclipse配置
+	远程jar仓库、本地jar仓库的概念
+	如何通过pom，寻找本地jar位置
+工具
+	浏览器：firefox、chrome
+	文本编译器：notepad++
+	接口测试工具：postman
+	
+===========================================================
+Spring Boot
+	what？整合主流第三方框架，形成的快速开发框架；
+	回顾ssm
+		web项目 ---- Maven管理（pom） ---- web.xml(上下文、监听器、过滤器、servlet) ---- 各种配置文件（applicationContext.xml、springMvcConfig.xml、springMybatis.xml or springHibernate.xml、springShiro.xml）
+		逐一加入配置、启动项目查看是否有错，逐一解决
+		配置的坟墓
+	核心
+		快速搭建项目
+		pom管理：starter依赖形式，常用依赖，按组聚集在一起，形成单条依赖，父子继承的方式，解决版本问题
+		原则：习惯优于配置，大大缩小了配置，没有web.xml
+		bean自动配置，采用注解化
+		servlet容器，不需要外部的servlet容器；
+		监控
+	why？
+		配置、编码、部署变得简单
+	mvc、boot、cloud
+		mvc：web
+		boot：垂直应用框架，web组件基于mvc；
+		cloud：分布式应用框架，三维立体的运用，多个垂直应用组成，每个微服务都是spring boot
+	核心注解
+		@SpringBootApplication ---- 启动spring boot工程的注解；
+		@Configuration ---- 配置类的注解，相当于<beans></beans>
+		@Bean ---- 相当于 <bean></bean>
+		@AutoConfigureAfter
+		@PropertySource ---- 读取配置文件
+		@ConfigurationProperties ---- 设置配置文件属性
+		@Value ---- 读取配置文件的值
+		@Component ---- 注册为 spring 组件
+		@Autowired || @Resource(name="*****")
+		@Transactional ---- 事务注解
+		@Aspect ---- aop注解
+		@Controller | @RestController
+			@RequestMapping
+			@ResponseBody
+		@Service
+		@Repository
+		
+===========================================================
+spring boot 框架搭建
+	基于mvc的maven管理的web项目
+	eclipse
+		new ---- other ----- spring ---- spring start project ---- 输入相应的信息 ---- fix the bug ---- 分包 ---- 书写接口
+	
+	问题整理
+		1、关于eclipse sts插件的问题
+			更换网络下载
+			更换已经安装好插件的版本，我已将自己使用的eclipse压缩后传到了共享目录
+		2、报错：org.apache.maven.archiver.mavenarchiver.getmanifest
+			maven配置文件不是最新的，需要升级maven插件
+			help ---- Install New Software ---- add（任选一个）
+			https://otto.takari.io/content/sites/m2e.extras/m2eclipse-mavenarchiver/0.17.2/N/LATEST
+			http://repo1.maven.org/maven2/.m2e/connectors/m2eclipse-mavenarchiver/0.17.2/N/LATEST/
+			点击 next 前，将 eclipse Install 窗口右下角的 Contact all update sites during install to find required software 选项；
+			安装成功后，重启eclipse 然后再右键项目maven update project；
+			-------------------------
+			访问国外服务器，也可能存在无法加载的问题，解决思路如第一点
+		3、利用sts插件创建spring boot项目时，连接超时的问题
+			设置超时时间：window ---- preference ---- spring ---- bean support ---- time out
+		4、端口被占用报错：Address used
+			cmd ---- 查询占用端口，杀掉对应pid ---- 杀不掉的情况，到系统服务中停掉相应服务 || 修改某些软件对应端口
+			netstat -ano | findstr "1434"
+			taskkill /f /pid 12700
+			
+		
+===========================================================
+spring boot 部署与运行
+	main方法运行
+	jar、war，java命令的方式运行
+	war放到外置servlet容器运行
+		spring 内置的tomcat jar与外置的jar冲突？
+		无web.xml的问题？
+Git
+	概念
+		远程代码仓库、本地代码仓库
+		流程：ide代码变更 ---- 本地代码仓库（commit） ----- 提交到远程代码仓库（push）
+		代码分支：开发目的不同，创建版本分支 ---- merge（合并分支代码）
+	常见功能
+		clone、branch、commit、push、pull、merge、revert
+	git vs svn
+		git：分布式、分支处理方便快捷、无全局版本号
+		svn：集中式、分支遗漏、全局版本号
+	下载并安装git、在github上注册账号
+	
+
+作业
+	1、安装对应的工具
+		浏览器：firefox、chrome
+		文本编译器：notepad++
+		接口测试工具：postman
+	2、创建spring boot项目，并且提供一个接口，接口返回string；
+	3、安装git客户端、创建github帐号，并将自己创建的项目上传到github
+		注解格式：时间 + 作业内容
+		例子："2020-04-20，创建springboot项目，提供一个接口。"
+		
+		
+	名字：https://github.com/hymanHu/springBoot2001.git
+	
+===========================================================
+配置文件
+	种类：properties文件、yml文件
+	全局配置文件
+		application.properties
+		application.yml
+	优先级
+		相同位置：properties > yml
+		不同位置：
+			外置：**.jar相同目录/config > **.jar相同目录
+			内置：src\main\resources\config > src\main\resources\
+	读取
+		@PropertySource ---- 绑定配置文件位置（全局配置文件无需绑定）
+		@Value ---- 读取配置文件值
+		@ConfigurationProperties ---- 如果指定了前缀，无需@Value
+		properties文件命名规则：下划线 或者 .，不要使用驼峰法
+log配置
+	logback
+		1、pom引入jar ---- springboot已经默认添加，无需手动引入
+		2、相应配置logback-dev.xml
+			设置全局变量
+			控制台
+			文件
+			第三方jar级别
+			自己书写代码的级别
+		3、全局配置文件指定log配置
+多环境配置
+	pom：无需外部jar支持
+	application.properties
+		不同的环境，配置细节不同：log、数据源
+		步骤：
+			多环境配置文件命名：application-{profile}.properties
+			多环境配置文件的引用：spring.profiles.active=live
+热部署的配置
+	pom ---- 引入jar ---- spring-boot-devtools
+	application.properties
+		开启restart
+		指定restart扫描路径
+	应用：修改java代码，应用自动重启
+http and https
+	http:超文本传输协议，端口默认80，明文传输、安全隐患
+	https：安全的超文本传输协议，端口默认443，数据有加密措施
+	安全
+		数据的安全
+		证书的安全
+	ssl证书
+		购买
+		自己生成： keytool -genkey -alias tomcat -keyalg RSA ---- 创建别名为tomcat的一条证书，使用RSA算法
+	--------------------------------------------------
+	1、pom ----- 无需引入相应的jar
+	2、application.properties
+	3、书写配置类
+		新需求：同时支持http、https
+		思路：新增一个连接器，支持http，将连接器加入到tomcat的容器里
+代码重构
+	重构了控制器：path、restController
+webServiceApi
+	SOAP：简单对象访问协议，xml，描述交换数据的相关信息，比较庞大，越做越复杂 ---- WSDL，定义了数据交换的信息
+	REST：架构风格，专门针对网络应用设计开发
+		reatful
+			url结尾不包含/
+			正斜杠分隔，指使层级关系
+			-连接符提高可读性
+			不能使用_
+			url全小写
+		举例 user
+			单资源
+				/api/user/{userId} ---- get
+				/api/user ---- post
+				/api/user ---- put
+				/api/user/{userId} ---- delete
+				/api/user/{userId}/name?name=*** ---- 修改名字
+			复数资源
+				/api/users ---- get
+				/api/users/search?name=*** ---- get
+				/api/users ----- post, searchVo
+				/api/users/searchByName
+			嵌套资源
+				/api/teams/{teamId}/member ---- get
+				/api/teams/{teamId}/member/{memberId}
+				
+		
+资料共享：https://pan.baidu.com/disk/home?#/all?vmode=list&path=%2Fshare
+github：https://github.com/hymanHu/Template.git	
+作业
+	完成：properties, log, application-{profile}, devtools, http, https
+	提交方式：github
+	注释上写明日期以及作业内容
+		
+	
+		
+		
+		
+	
+	
+	
+		
+	
+		
+	
+	
+	
+	
