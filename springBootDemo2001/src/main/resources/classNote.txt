@@ -209,6 +209,97 @@ github：https://github.com/hymanHu/Template.git
 	完成：properties, log, application-{profile}, devtools, http, https
 	提交方式：github
 	注释上写明日期以及作业内容
+
+==================================================================
+知识回顾
+	spring介绍
+	mvc思想：m（数据）、v（展示）、c（控制）
+	maven和eclipse使用
+spring boot
+	简介：整合主流第三方框架，形成的快速开发框架
+	核心内容
+		快速搭建项目
+		pom管理：starter依赖形式，常用依赖，按组聚集在一起，形成单条依赖，父子继承的方式，解决版本问题
+		原则：习惯优于配置，大大缩小了配置，没有web.xml
+		bean自动配置，采用注解化
+		servlet容器，不需要外部的servlet容器；
+		监控
+	注解
+		@SpringBootApplication ---- 启动spring boot工程的注解；
+		@Configuration ---- 配置类的注解，相当于<beans></beans>
+		@Bean ---- 相当于 <bean></bean>
+		@Component ---- 注册为 spring 组件
+		@Autowired || @Resource(name="*****")
+		@Controller
+			返回modelandview（页面） ---- @Controller
+			返回数据 ---- @Controller + @ResponseBody = @RestController
+		@Service
+		@Repository
+		
+		我们需要一个对象 ---- 最古老的的new出来 ---- spring框架，不用自己new了，ioc帮我们干这个事情 ---- spring mvc期间，使用配置文件来完成 ---- spring boot期间，使用注解完成
+搭建框架
+	共享目录提交了我正在使用的eclipse压缩包，已经装好了插件，省去了装插件的麻烦
+spring boot 运行
+Git
+	思想
+		远程仓库 ----- 本地仓库
+		commit提交到本地仓库
+		push将本地仓库提交到远程仓库
+	下载客户端 ---- 安装 ---- 配置环境变量（省去这一步，安装中自动完成） ----- 检验 git --version
+	github ---- 注册账号 ---- 创建仓库 ---- clone 仓库到本地文件夹
+		eclipse删除项目 ----- 将已有的项目移动到本地仓库文件夹下 ---- eclipse导入项目 ----- 选择忽略文件进行忽略（bin、target、mvn） ---- add to index（加入提交序列）---- 添加comments ---- commit and push | commit（项目文件夹cmd ---- git status ---- git push origin master）
+		直接创建项目在仓库 ---- 后续步骤一致
+		删除仓库项目 ---- 提交
+		revert 某次提交 ---- push
+配置文件
+	种类：properties、yml两种，怎么转换：https://www.toyaml.com/index.html
+	优先级：properties > yml，外置大于内置，config下 > 大于config平级 || 测试：整两份配置不同端口，放在不同位置，启动项目，查看项目开启那个配置的端口
+	读取：在需要的地方以value对属性的注解：@Value("${http.port}")
+log配置
+	套路顺序1：pom引入jar ---- 已经完成
+	套路顺序2：配置文件做配置、书写配置类
+		logback-dev.xml ---- 规则
+			控制台输出、文件输出、三方jar的级别、root级别指定
+		logging.config=classpath:config/logback-dev.xml ---- 引入规则
+	套路顺序3：应用
+		private final static Logger LOGGER = LoggerFactory.getLogger(TestController.class);
+多环境配置
+	场景：开发人员能不能动生产数据库？ ---- 代码一致，但数据库不一致该怎么弄？ ----- 不同的开发环境
+	三个环境：application-{profile}.properties
+		dev ----- 开发人员玩 ---- application-dev.properties
+		Staging ----- 测试人员玩 ---- application-staging.properties
+		live环境 ----- 客户玩 ---- application-live.properties
+	全局配置文件引入：spring.profiles.active=dev
+热部署的配置
+	套路顺序1：pom ---- spring-boot-devtools
+	套路顺序2：配置
+		spring.devtools.restart.enabled=true
+		spring.devtools.restart.additional-paths=src/main/java
+	套路顺序3：应用 ---- 自动restart，无需手动应用
+http（超文本传输协议）、https（安全的超文本传输协议）
+	概念：
+		数据安全（https）
+		ssl证书：keytool -genkey -alias tomcat -keyalg RSA
+		证书安全（未经注册的证书是不安全的，浏览器会提示访问网站不安全，接受并继续就好了）
+	实现的步骤
+		套路顺序1：pom ---- 无需引入
+		套路顺序2：配置
+			将证书拷贝到项目里
+			server.ssl.key-store=classpath:.keystore
+			server.ssl.key-store-password=111111
+			-----------------------------------------------
+			思路：
+				实现http、https请求，servlet 容器完成的，----- 增加httpp，是不是应该在容器上下功夫 ----- ServletWebServerFactory（TomcatServletWebServerFactory）
+				配置类：WebServerConfig
+		套路顺序3：应用
+			直接访问https，可用
+webServiceApi
+	restful：rest api 接口在path命名上的一些规范 ---- 代码的可读性；
+		一个程序员，自杀了，领导和同事分析结果是什么呢：
+			命名不规范、还没有注解
+			换行不规范，瞎换行
+			整天使用git push -f
+		单资源、复数资源、嵌套资源
 		
 	
 		
