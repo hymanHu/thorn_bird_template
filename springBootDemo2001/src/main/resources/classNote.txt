@@ -12,7 +12,7 @@ spring
 		web
 		test
 MVC
-	M（model）、V（view）、C（controller）
+	M（model、数据）、V（view、展示）、C（controller、控制器）
 	view --- controller ---- service ---- data access（sql、nosql） ---- service ---- controlle ---- view
 Maven
 	eclipse配置
@@ -300,7 +300,25 @@ webServiceApi
 			换行不规范，瞎换行
 			整天使用git push -f
 		单资源、复数资源、嵌套资源
-		
+==================================================================
+mybatis
+	介绍：
+		源自于ibatis ---- mybatis ---- 半自动
+		hibernate（jpa） ---- 全自动 hql
+	套路顺序1：pom
+		mysql ---- 注意版本
+		连接池 ---- hikari ----- 无需引入
+		mybatis ----- 引入
+		分页 ---- sql分页（不同数据库分页语句不一致） ---- 分页插件 ----- 引入
+	套路顺序2：配置
+		mysql ---- 注意版本
+		hikari
+		mybatis ----- 有mapper.xml和无mapper.xml
+	套路顺序3：应用
+		书写三层：dao、server、controller
+		dao
+			一对多组合查询
+			结果集公用
 	
 		
 		
