@@ -1,6 +1,7 @@
 package com.thornBird.sbd.modules.test.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,10 @@ public class CityServiceImpl implements CityService {
 	public PageInfo<City> getCitiesByPage(int currentPage, int pageSize, int countryId) {
 		PageHelper.startPage(currentPage, pageSize);
 		List<City> cities = cityDao.getCitiesByCountryId(countryId);
+//		cities.stream().map(item -> {
+//			item.setCityName(item.getCityName() + "--");
+//			return item;
+//		}).collect(Collectors.toList());
 		return new PageInfo<City>(cities);
 	}
 

@@ -344,7 +344,16 @@ mybatis
 mybatis
 	多参数查询、多条件脚本查询、update、delete、事务
 	
+	作业
+		//TODO	
+		换行
 		
+自动生成表
+	简介：JPA（hibernate）
+	套路顺序1：pom ---- 引入jpa
+	套路顺序2：配置 ---- 策略配置update、引擎配置innerdb
+	套路顺序3：应用
+		实体bean添加相应的注解 ---- 启动程序
 	
 		
 		
