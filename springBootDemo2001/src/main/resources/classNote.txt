@@ -56,10 +56,12 @@ Spring Boot
 		@Transactional ---- 事务注解
 		@Aspect ---- aop注解
 		@Controller | @RestController
-			@RequestMapping
+			@RequestMapping、@PostMapping
 			@ResponseBody
+			@PathVariable、@RequestParam、@RequestBody
 		@Service
 		@Repository
+			@Mapper、@Select、@Results、@Many、@ResultMap
 		
 ===========================================================
 spring boot 框架搭建
@@ -326,6 +328,21 @@ mybatis
 		结果集公用
 		分页查询
 		insert
+		
+	enum 结果集公用
+	结果集公用、enum
+	
+	enum
+		使用常量的形式，好理解
+		新需求：比如说显示用户的照片，需要两张图片，一张图片大图片（500*500、BIG_）、一张中间图片（100*100,MIDDLE_）、一张小图片（50*50，SMALL_）、
+		处理一些按种类，每个种类有多个属性，类似于常量的数据；
+		写法：
+			定义属性，定于构造器，实例化不同种类的数据（根据构造器）
+	结果集公用
+		使用@ResultMap 指向已经定义好的@Results，就能达到公用的目的
+	
+	
+		
 	
 		
 		
