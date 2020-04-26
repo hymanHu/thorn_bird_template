@@ -407,8 +407,18 @@ thymleaf
 				外层index.html，理解成碎片组装器，每个控制器都返回该碎片组装器，设置template，对不同的显示内容进行替换
 				为什么要有一个indexSimple.html文件？ -----比如，登录、注册页面，没有公共的header部分和footer部分，所以产生这个文件，去掉了这两个部分
 				:: header ---- 准确定位需要替换文件中的哪个部分
-				
-			完成组装器，并且展示test模块下的index
+	创建test模块下的index.html
+		thymleaf 页面标签的使用和数据处理
+			th:text
+			th:if,th:unless
+			th:attr
+			th:href，th:src
+			th:object
+			form
+			th:each
+	作业
+		完成组装器，外层index.html，并且展示test模块下的index页面
+		完成常用标签的应用
 				
 	
 	
