@@ -354,6 +354,49 @@ mybatis
 	套路顺序2：配置 ---- 策略配置update、引擎配置innerdb
 	套路顺序3：应用
 		实体bean添加相应的注解 ---- 启动程序
+		
+view
+	简介：
+		jsp ---- 模板引擎、java
+		thymeleaf ---- 模板引擎，基于xml、html5、spring boot推荐使用
+	套路顺序1：pom ---- 引入thymeleaf
+	套路顺序2：配置 ---- 详见代码
+	套路顺序3：应用
+		碎片组装思想
+			一个页面拆分成如下碎片：头部、左边菜单、底部、展示的中间区域body（真正变化的）
+			当我们要跳转并访问某页面时候：那上面的碎片进行组装
+		模块化思想
+			前端页面分模块、和后端的modules一一对应
+			
+作业
+	1、多参数查询、多条件脚本查询、update、delete、事务
+	2、user\role\resource ---- 增删改查接口写出来
+	
+==================================================================
+回顾
+	多参数查询
+	调试
+thymleaf
+	创建templates分包，按模块
+	创建index.html ---- 拆分index各个功能块
+		head
+			js、css引用
+				回顾jsp
+					<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+					<script src="${pageContext.request.contextPath}/static/js/hrms.js" type="text/javascript"></script>
+					<link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+					<link href="${pageContext.request.contextPath}/static/css/admin.css" type="text/css" rel="stylesheet">
+				thymeleaf ---- th:
+					<script th:src="@{http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js}"></script>
+					<script th:src="${'/js/sbDemo.js'}" type="text/javascript"></script>
+					<link th:href="@{http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css}" rel="stylesheet" >
+					<link th:href="${'/css/sbDemo.css'}" rel="stylesheet" />
+		body
+			碎片替换
+				fragments/header ---- classpath:/templates/fragments/header.html
+				显示不同页面：控制器设置template变量（不同页面的路径），index.html解析template，获得不同页面路劲，进行替换
+				
+	
 	
 		
 		

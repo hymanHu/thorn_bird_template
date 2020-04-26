@@ -27,7 +27,8 @@ public interface CityDao {
 	List<City> getCitiesByCountryId2(int countryId);
 	
 	@Select("select * from m_city where city_name = #{cityName} and local_city_name = #{localCityName}")
-	City getCityByName(@Param("cityName") String cityName, @Param("localCityName") String localCityName);
+	City getCityByName(String cityName, String localCityName);
+//	City getCityByName(@Param("cityName") String cityName, @Param("localCityName") String localCityName);
 	
 	@Select("<script>" + 
 			"select * from m_city "
