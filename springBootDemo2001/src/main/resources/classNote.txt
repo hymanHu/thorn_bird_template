@@ -416,9 +416,37 @@ thymleaf
 			th:object
 			form
 			th:each
-	作业
-		完成组装器，外层index.html，并且展示test模块下的index页面
-		完成常用标签的应用
+作业问题		
+	+ "limit 1"
+		命名 ---- 方法、My、path（restful）
+过滤器、拦截器
+	简介：作用点不同
+		过滤器：对request、response进行处理，过滤信息，设置参数等等
+			处理request、response对象
+			不能获取ioc容器中的bean，它自己需要注册才能实例化成ioc的bean
+			单调一些
+		拦截器：为了增强业务流中功能，日记处理、权限检查、性能监控等
+			只是针对 action（controller）
+			可以获取ioc容器的bean，比如，可以注入service等
+			强大一些，灵活一些（在前、中、后执行）
+	套路顺序1：pom ---- 无需引入额外jar
+	套路顺序2：配置 ---- 牵涉到了业务逻辑，需要配置类
+	套路顺序3：应用 ---- 无需手动调用
+	
+	过滤器
+		过滤掉请求参数中的敏感字符串fuck ---- ***
+		创建过滤器 ---- 注册过滤器 ---- 过滤规则
+		通过包装类 HttpServletRequestWrapper 来处理 request 对象中参数的问题
+	拦截器
+		通过path路径，自动设置template路径
+		创建拦截器 ----- 注册拦截器 ----- 拦截规则
+
+作业
+	完成组装器，外层index.html，并且展示test模块下的index页面
+	完成常用标签的应用
+	完成过滤器、拦截器例子
+		
+		
 				
 	
 	
