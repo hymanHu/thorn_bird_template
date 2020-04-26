@@ -40,9 +40,8 @@ public interface CityDao {
 			+ "and local_city_name = #{localCityName} "
 			+ "</if>"
 			+ "</where>"
-			+ "limit 1"
 			+ "</script>")
-	City getCityByName2(@Param("cityName") String cityName, @Param("localCityName") String localCityName);
+	List<City> getCityByName2(@Param("cityName") String cityName, @Param("localCityName") String localCityName);
 	
 	@Insert("insert into m_city (city_name, local_city_name, country_id, date_created) "
 			+ "values (#{cityName}, #{localCityName}, #{countryId}, #{dateCreated})")

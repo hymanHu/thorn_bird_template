@@ -41,7 +41,7 @@ public class TestPageController {
 		modelMap.addAttribute("city", city);
 		modelMap.addAttribute("updateCityUri", "/api/city");
 		modelMap.addAttribute("cities", cities);
-		modelMap.addAttribute("template", "test/index");
+//		modelMap.addAttribute("template", "test/index");
 		return "index";
 	}
 	

@@ -1,7 +1,8 @@
 package com.thornBird.sbd.modules.test.service.impl;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,9 @@ public class CityServiceImpl implements CityService {
 
 	@Override
 	public City getCityByName(String cityName, String localCityName) {
-		return cityDao.getCityByName2(cityName, localCityName);
+		List<City> cities = Optional.ofNullable(cityDao.getCityByName2(cityName, localCityName))
+				.orElse(Collections.emptyList());
+		return cities.isEmpty() ? null : cities.get(0);
 	}
 
 	@Override
