@@ -395,6 +395,20 @@ thymleaf
 			碎片替换
 				fragments/header ---- classpath:/templates/fragments/header.html
 				显示不同页面：控制器设置template变量（不同页面的路径），index.html解析template，获得不同页面路劲，进行替换
+				----------------------
+				每个页面都包含相同的代码块，增加了书写和维护的难度，修改公共部分，那么所有页面都要修改
+				想办法把公共部分抽取出来，碎片化思想来完成
+				第一个抽取：将html标签、header标签抽取出来，形成外层index.html文件（相当于碎片组装器）
+				第二个抽取，将页面上显示的header部分抽取出来形成header.html文件
+				第三个抽取：将页面显示footer部分抽取出来形成footer.html文件
+				组装，通过谁来组装？ ------ 外层的index.html
+				怎么组装？ ---- thymleaf的th:replace替换标签，将抽取出来的公共页面替换到外层index相应的部分
+				如何替换不同的部分？ ---- 通过 template 变量来替换不同页面，template是在控制器进行设置，内容是不同页面的路径
+				外层index.html，理解成碎片组装器，每个控制器都返回该碎片组装器，设置template，对不同的显示内容进行替换
+				为什么要有一个indexSimple.html文件？ -----比如，登录、注册页面，没有公共的header部分和footer部分，所以产生这个文件，去掉了这两个部分
+				:: header ---- 准确定位需要替换文件中的哪个部分
+				
+			完成组装器，并且展示test模块下的index
 				
 	
 	
