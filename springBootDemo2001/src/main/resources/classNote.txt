@@ -469,6 +469,16 @@ aop
 		页面端：form ----- enctype="multipart/form-data"
 	文件下载
 	
+	套路顺序1：pom ---- 无需引入额外jar
+	套路顺序2：配置 ---- 可能需要配置
+	套路顺序3：应用
+		上传：
+			页面端：form ----- enctype="multipart/form-data"
+			服务器端
+				@RequestParam MultipartFile file 来接收文件
+				file.transferTo(destFile);
+		下载
+			设置头部信息： application/octet-stream
 		
 	
 	

@@ -3,18 +3,18 @@
 	
 	<p>==================================================================</p>
 	<h3>file upload and downlod</h3>
-	<a href="/test/download2?fileName=QQ截图20200402163924.png">download file</a>
+	<a href="/api/test/download?fileName=QQ截图20200427110810.png">download file</a>
 	<br>
 	
 	<p th:text="${message}"></p>
 	<p>上传文件，使用multipart/form-data类型</p>
-	<form action="/test/upload" method="post" enctype="multipart/form-data">
+	<form action="/test/file" method="post" enctype="multipart/form-data">
 		<input type="file" name="file">
 		<button type="submit">上传</button>
 	</form>
 	<br>
 	
-	<form action="/test/uploadBatchFile" method="post" enctype="multipart/form-data">
+	<form action="/test/files" method="post" enctype="multipart/form-data">
 		<input type="file" name="files">
 		<input type="file" name="files">
 		<button type="submit">上传</button>
