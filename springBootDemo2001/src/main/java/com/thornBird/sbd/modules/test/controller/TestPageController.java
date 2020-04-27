@@ -22,6 +22,9 @@ public class TestPageController {
 	@Autowired
 	private CityService cityService;
 	
+	/**
+	 * 127.0.0.1/test/index
+	 */
 	@RequestMapping("/index")
 	public String testIndexPage(ModelMap modelMap) {
 		int countryId = 522;
