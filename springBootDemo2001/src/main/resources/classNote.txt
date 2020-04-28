@@ -479,6 +479,43 @@ aop
 				file.transferTo(destFile);
 		下载
 			设置头部信息： application/octet-stream
+监控
+	提供了一套端点的监控接口，接口返回某功能点的信息搜集数据
+	套路顺序1：pom ---- spring-boot-starter-actuator
+	套路顺序2：配置 ---- 可能需要配置
+	套路顺序3：应用
+		启动项目，直接调用接口
+		http://127.0.0.1/monitor
+		
+回顾
+	接口
+		dao：增（获取新增id）、删、改、查（组合查询、多条件查询、查询脚本）
+		service
+			事务
+		controller
+			接口（requestmapping、postmapping、putmapping、deletemapping || consume ：json、form、file || pathvarible、requetparam（文件）、moduleattribute）
+	view
+		thymleaf模版
+			碎片化思想、分模块思想
+			页面数据的处理
+	过滤器：过滤查询参数中的fuck
+	拦截器：自动封装template
+	aop：log控制层的request信息
+	文件上传下载
+	端点监控
+	
+			
+作业
+	aop、文件上传、下载、端点练习
+	思考题：如何解决文件过大，上传抛出exception的问题？
+	
+	1、aop、文件上传、下载、端点练习
+	2、思考题：如何解决文件过大，上传抛出exception的问题？
+	3、还烦请大家填写群在线文档，学习情况统计信息，谢谢
+	
+==================================================================
+
+
 		
 	
 	
