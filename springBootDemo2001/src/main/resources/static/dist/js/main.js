@@ -22,3 +22,23 @@ jQuery(function($) {
 		}
 	});
 });
+
+function initRoles(roleName) {
+	$("[name='roles']").empty();
+	$.ajax({
+		url : "/api/roles",
+		type : "get",
+		contentType: "application/json",
+		success : function (rs) {
+			$("[name='roles']").append("<label class='middle'>");
+			$.each(rs, function(i, value) {
+				$("[name='roles']").append("<input name='"+ roleName + "' value='" + 
+						value.roleId +"' type='checkbox'>" + value.roleName + "&nbsp;&nbsp;");
+			});
+			$("[name='roles']").append("</label>");
+		},
+		error : function (data) {
+			layer.alert(data.responseText, {icon: 0});
+		}
+	});
+}

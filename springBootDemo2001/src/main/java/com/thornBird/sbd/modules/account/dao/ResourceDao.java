@@ -13,6 +13,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.thornBird.sbd.modules.account.entity.Resource;
+import com.thornBird.sbd.modules.common.vo.SearchVo;
 
 @Mapper
 public interface ResourceDao {
@@ -31,6 +32,24 @@ public interface ResourceDao {
 	
 	@Select("select * from resource")
 	List<Resource> getResources();
+	
+	@Select("<script>" + 
+			"select * from resource "
+			+ "<where> "
+			+ "<if test='keyWord != \"\" and keyWord != null'>"
+			+ "and resource_name like '%${keyWord}%' "
+			+ "</if>"
+			+ "</where>"
+			+ "<choose>"
+			+ "<when test='orderBy != \"\" and orderBy != null'>"
+			+ "order by ${orderBy} ${sort}"
+			+ "</when>"
+			+ "<otherwise>"
+			+ "order by resource_id desc"
+			+ "</otherwise>"
+			+ "</choose>"
+			+ "</script>")
+	List<Resource> getResourcesBySearchVo(SearchVo searchVo);
 	
 	@Select("select * from resource resource left join role_resource roleResource on "
 			+ "resource.resource_id = roleResource.resource_id where roleResource.role_id = #{roleId}")

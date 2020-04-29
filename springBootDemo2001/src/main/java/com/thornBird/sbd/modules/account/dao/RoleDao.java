@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.thornBird.sbd.modules.account.entity.Role;
+import com.thornBird.sbd.modules.common.vo.SearchVo;
 
 @Mapper
 public interface RoleDao {
@@ -26,6 +27,24 @@ public interface RoleDao {
 	
 	@Select("select * from role")
 	List<Role> getRoles();
+	
+	@Select("<script>" + 
+			"select * from role "
+			+ "<where> "
+			+ "<if test='keyWord != \"\" and keyWord != null'>"
+			+ "and role_name like '%${keyWord}%' "
+			+ "</if>"
+			+ "</where>"
+			+ "<choose>"
+			+ "<when test='orderBy != \"\" and orderBy != null'>"
+			+ "order by ${orderBy} ${sort}"
+			+ "</when>"
+			+ "<otherwise>"
+			+ "order by role_id desc"
+			+ "</otherwise>"
+			+ "</choose>"
+			+ "</script>")
+	List<Role> getRolesBySearchVo(SearchVo searchVo);
 	
 	@Select("select * from role role left join user_role userRole "
 			+ "on role.role_id = userRole.role_id where userRole.user_id = #{userId}")

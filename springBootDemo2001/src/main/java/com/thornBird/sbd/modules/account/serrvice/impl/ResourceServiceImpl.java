@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,17 +30,17 @@ public class ResourceServiceImpl implements ResourceService {
 	@Override
 	@Transactional
 	public Result<Resource> editResource(Resource resource) {
-		if (resource == null || StringUtils.isBlank(resource.getResourceUri()) ) {
+		if (resource == null) {
 			return new Result<Resource>(500, "resource info is null");
 		}
-		
+
 		// 添加 resource
 		if (resource.getResourceId() > 0) {
 			resourceDao.updateResource(resource);
 		} else {
 			resourceDao.addResource(resource);
 		}
-		
+
 		// 添加 roleResource
 		roleResourceDao.deletRoleResourceByResourceId(resource.getResourceId());
 		if (resource.getRoles() != null && !resource.getRoles().isEmpty()) {
@@ -49,7 +48,7 @@ public class ResourceServiceImpl implements ResourceService {
 				roleResourceDao.addRoleResource(role.getRoleId(), resource.getResourceId());
 			}
 		}
-		
+
 		return new Result<Resource>(200, "success", resource);
 	}
 
@@ -67,7 +66,7 @@ public class ResourceServiceImpl implements ResourceService {
 		searchVo.initSearchVo(searchVo);
 		PageHelper.startPage(searchVo.getCurrentPage(), searchVo.getPageSize());
 		return new PageInfo(
-				Optional.ofNullable(resourceDao.getResources())
+				Optional.ofNullable(resourceDao.getResourcesBySearchVo(searchVo))
 				.orElse(Collections.emptyList()));
 	}
 

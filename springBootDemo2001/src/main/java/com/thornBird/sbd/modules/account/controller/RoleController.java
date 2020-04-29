@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +30,12 @@ public class RoleController {
 	}
 	
 	@PostMapping(value = "/role", consumes = "application/json")
-	public Result<Role> editRole(@RequestBody Role role) {
+	public Result<Role> insertRole(@RequestBody Role role) {
+		return roleService.editRole(role);
+	}
+	
+	@PutMapping(value = "/role", consumes = "application/json")
+	public Result<Role> updateRole(@RequestBody Role role) {
 		return roleService.editRole(role);
 	}
 	

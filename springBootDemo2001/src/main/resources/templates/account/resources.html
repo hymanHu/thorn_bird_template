@@ -6,12 +6,12 @@
 	<div class="container-fluid">
 		<div class="row mb-2">
 			<div class="col-sm-6">
-				<h1>Users</h1>
+				<h1>Resources</h1>
 			</div>
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
 					<li class="breadcrumb-item"><a href="/common/dashboard">Home</a></li>
-					<li class="breadcrumb-item active">Users</li>
+					<li class="breadcrumb-item active">Resources</li>
 				</ol>
 			</div>
 		</div>
@@ -28,19 +28,19 @@
 					<div class="btn-group col-md-12 operation" style="margin-bottom: 5px;">
 						<span class="input-group-btn col-md-12">
 							<button id="btnAdd" type="button" class="btn btn-info" 
-								data-toggle="modal" data-target="#userAddModal">Add</button>
+								data-toggle="modal" data-target="#resourceAddModal">Add</button>
 						</span>
 					</div>
 				</div>
 				<!-- /.card-header -->
 				<div class="card-body">
-					<table id="usersTable" class="table table-bordered table-hover">
+					<table id="resourcesTable" class="table table-bordered table-hover">
 						<thead>
 							<tr>
-								<th>User Id</th>
-								<th>User Name</th>
-								<th>Password</th>
-								<th>Create Date</th>
+								<th>Resource Id</th>
+								<th>Resource Name</th>
+								<th>Resource Name</th>
+								<th>Permission</th>
 								<th>Operate</th>
 							</tr>
 						</thead>
@@ -55,8 +55,8 @@
 	</div>
 	<!-- /.row -->
 	
-	<div th:replace="account/userAdd :: userAdd"></div>
-	<div th:replace="account/userEdit :: userEdit"></div>
+	<div th:replace="account/resourceAdd :: resourceAdd"></div>
+	<div th:replace="account/resourceEdit :: resourceEdit"></div>
 </section>
 
 <!-- DataTables -->
@@ -71,17 +71,17 @@ $(document).ready(function() {
 	$("#btnAdd").bind("click", function(){
 		initAddModal();
 	})
-	$("#userAddBtn").bind("click", function(){
-		insertUser();
+	$("#resourceAddBtn").bind("click", function(){
+		insertResource();
 	})
-	$("#userEditBtn").bind("click", function(){
-		updateUser();
+	$("#resourceEditBtn").bind("click", function(){
+		updateResource();
 	})
 });
 
 //初始化表格数据
 function initTable(currentPage, pageSize){
-	$('#usersTable').DataTable({
+	$('#resourcesTable').DataTable({
 		'paging': true, //分页
 		"serverSide": true, //开启后端分页
 		"pagingType": "full_numbers", //分页样式的类型simple/simple_numbers/full/full_numbers
@@ -108,7 +108,7 @@ function initTable(currentPage, pageSize){
 			searchVo.keyWord = data.search.value;
 
 			$.ajax({
-				url : "/api/users",
+				url : "/api/resources",
 				type : "post",
 				contentType: "application/json",
 				data : JSON.stringify(searchVo),
@@ -125,7 +125,7 @@ function initTable(currentPage, pageSize){
 						return;
 					};
 					if (rs.list == null) {
-						$('#usersTable tbody tr').remove();
+						$('#resourcesTable tbody tr').remove();
 						$('#loading').remove();
 						callback(fData);
 						return;
@@ -134,8 +134,8 @@ function initTable(currentPage, pageSize){
 					var gearDatas = [];
 					for (var i = 0; i < rs.list.length; i++) {
 						//包装行数据
-						var rowData = new TData(rs.list[i].userId, rs.list[i].userName, 
-								rs.list[i].password, rs.list[i].createDate);
+						var rowData = new TData(rs.list[i].resourceId, rs.list[i].resourceName, 
+								rs.list[i].resourceUri, rs.list[i].permission);
 						// 将行数据放到数组里
 						gearDatas.push(rowData);
 					}
@@ -150,25 +150,25 @@ function initTable(currentPage, pageSize){
 			});
 		},
 		"columns": [ //定义行数据字段
-			{data: 'userId', name: "user_id", sortable: true}, 
-			{data: 'userName', name: "user_name", sortable: true}, 
-			{data: 'password', name: "password", sortable: true},
-			{data: 'createDate', name: "create_date", sortable: true},
+			{data: 'resourceId', name: "resource_id", sortable: true}, 
+			{data: 'resourceName', name: "resource_name", sortable: true}, 
+			{data: 'resourceUri', name: "resource_uri", sortable: true},
+			{data: 'permission', name: "permission", sortable: true},
 			{data: 'operate', width: '80px', sortable: false}
 		]
 	});
 }
 
 //行数据结构
-function TData(userId, userName, password, createDate) {
-	this.userId = userId;
-	this.userName = userName;
-	this.password = password;
-	this.createDate = createDate;
+function TData(resourceId, resourceName, resourceUri, permission) {
+	this.resourceId = resourceId;
+	this.resourceName = resourceName;
+	this.resourceUri = resourceUri;
+	this.permission = permission;
 	this.operate = function () {
 		return "<a href='#' class='btn_editcolor' data-toggle='modal' " + 
-			"data-target='#userEditModal' onclick='initEditModal(\"" + userId + "\")'>编辑</a>&nbsp;" + 
-			"<a href='javascript:void(0);' onclick='deleteUser(\"" + userId + "\")' class='btn_editcolor'>删除</a>";
+			"data-target='#resourceEditModal' onclick='initEditModal(\"" + resourceId + "\")'>编辑</a>&nbsp;" + 
+			"<a href='javascript:void(0);' onclick='deleteResource(\"" + resourceId + "\")' class='btn_editcolor'>删除</a>";
 	}
 }
 
@@ -176,15 +176,17 @@ function TData(userId, userName, password, createDate) {
 function initAddModal() {
 	initRoles("roleForAddPage");
 	
-	$("#userNameForAddPage").val("");
-	$("#passwordForAddPage").val("");
+	$("#resourceNameForAddPage").val("");
+	$("#resourceUriForAddPage").val("");
+	$("#permissionUriForAddPage").val("");
 }
 
-// 添加user
-function insertUser() {
-	var user = {};
-	user.userName = $("[name='userName']").val();
-	user.password = $("[name='password']").val();
+// 添加resource
+function insertResource() {
+	var resource = {};
+	resource.resourceName = $("#resourceNameForAddPage").val();
+	resource.resourceUri = $("#resourceUriForAddPage").val();
+	resource.permission = $("#permissionUriForAddPage").val();
 	var roles = new Array();
 	$.each($("input[name='roleForAddPage']"), function(){
 		if(this.checked){
@@ -193,13 +195,13 @@ function insertUser() {
 			roles.push(role);
 		}
 	});
-	user.roles = roles;
+	resource.roles = roles;
 	
 	$.ajax({
-		url : "/api/register",
+		url : "/api/resource",
 		type : "post",
 		contentType: "application/json",
-		data : JSON.stringify(user),
+		data : JSON.stringify(resource),
 		success : function (data) {
 			if (data.status == 200) {
 				initTable(DEFAULT_CURRENT_PAGE, DEFAULT_PAGE_SIZE);
@@ -214,16 +216,22 @@ function insertUser() {
 }
 
 // 初始化编辑页面
-function initEditModal(userId) {
+function initEditModal(resourceId) {
 	initRoles("roleForEditPage");
 	
 	$.ajax({
-		url : "/api/user/" + userId,
+		url : "/api/resource/" + resourceId,
 		type : "get",
 		contentType: "application/json",
 		success : function (rs) {
-			$("#userIdForEditPage").val(rs.userId);
-			$("#userNameForEditPage").val(rs.userName);
+			$("#resourceIdForEditPage").val(rs.resourceId);
+			$("#resourceNameForEditPage").val(rs.resourceName);
+			$("#resourceUriForEditPage").val(rs.resourceUri);
+			$("#permissionUriForEditPage").val(rs.permission);
+			$.each(rs.roles, function(i, item){
+				$("input[name='roleForEditPage'][value=" + item.roleId + "]")
+					.attr("checked","checked");
+			});
 		},
 		error : function (data) {
 			layer.alert(data.responseText, {icon: 0});
@@ -231,10 +239,12 @@ function initEditModal(userId) {
 	});
 }
 
-function updateUser() {
-	var user = {};
-	user.userId = $("#userIdForEditPage").val();
-	user.userName = $("#userNameForEditPage").val();
+function updateResource() {
+	var resource = {};
+	resource.resourceId = $("#resourceIdForEditPage").val();
+	resource.resourceName = $("#resourceNameForEditPage").val();
+	resource.resourceUri = $("#resourceUriForEditPage").val();
+	resource.permission = $("#permissionUriForEditPage").val();
 	var roles = new Array();
 	$.each($("input[name='roleForEditPage']"), function(){
 		if(this.checked){
@@ -243,13 +253,13 @@ function updateUser() {
 			roles.push(role);
 		}
 	});
-	user.roles = roles;
+	resource.roles = roles;
 
 	$.ajax({
-		url : "/api/user",
+		url : "/api/resource",
 		type : "put",
 		contentType: "application/json",
-		data : JSON.stringify(user),
+		data : JSON.stringify(resource),
 		success : function (rs) {
 			if (rs.status == 200) {
 				initTable(DEFAULT_CURRENT_PAGE, DEFAULT_PAGE_SIZE);
@@ -263,11 +273,11 @@ function updateUser() {
 	});
 }
 
-function deleteUser(userId) {
+function deleteResource(resourceId) {
 	bootbox.confirm("Are you sure?", function(result) {
 		if(result) {
 			$.ajax({
-				url : "/api/user/" + userId,
+				url : "/api/resource/" + resourceId,
 				type : "delete",
 				success : function (rs) {
 					if (rs.status == 200) {

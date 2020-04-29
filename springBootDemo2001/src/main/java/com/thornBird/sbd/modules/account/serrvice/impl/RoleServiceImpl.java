@@ -52,7 +52,9 @@ public class RoleServiceImpl implements RoleService {
 	public PageInfo<Role> getRoles(SearchVo searchVo) {
 		searchVo.initSearchVo(searchVo);
 		PageHelper.startPage(searchVo.getCurrentPage(), searchVo.getPageSize());
-		return new PageInfo(Optional.ofNullable(roleDao.getRoles()).orElse(Collections.emptyList()));
+		return new PageInfo(
+				Optional.ofNullable(roleDao.getRolesBySearchVo(searchVo))
+				.orElse(Collections.emptyList()));
 	}
 
 	@Override
