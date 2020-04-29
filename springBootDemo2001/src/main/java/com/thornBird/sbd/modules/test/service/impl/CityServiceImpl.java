@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.thornBird.sbd.modules.common.vo.Result;
-import com.thornBird.sbd.modules.common.vo.Result.ResultEnum;
+import com.thornBird.sbd.modules.common.vo.Result.ResultStatus;
 import com.thornBird.sbd.modules.test.dao.CityDao;
 import com.thornBird.sbd.modules.test.entity.City;
 import com.thornBird.sbd.modules.test.service.CityService;
@@ -48,13 +48,13 @@ public class CityServiceImpl implements CityService {
 
 	@Override
 	public Result<City> insertCity(City city) {
-		Result<City> result = new Result<>(ResultEnum.SUCCESS.status, "Insert success.");
+		Result<City> result = new Result<>(ResultStatus.SUCCESS.status, "Insert success.");
 		
 		try {
 			cityDao.insertCity(city);
 			result.setObject(city);
 		} catch (Exception e) {
-			result.setStatus(ResultEnum.FAILD.status);
+			result.setStatus(ResultStatus.FAILED.status);
 			result.setMessage(e.getMessage());
 		}
 		
@@ -64,7 +64,7 @@ public class CityServiceImpl implements CityService {
 	@Override
 	@Transactional
 	public Result<City> updateCity(City city) {
-		Result<City> result = new Result<>(ResultEnum.SUCCESS.status, "Update success.");
+		Result<City> result = new Result<>(ResultStatus.SUCCESS.status, "Update success.");
 		
 		cityDao.updateCity(city);
 		result.setObject(city);
@@ -75,12 +75,12 @@ public class CityServiceImpl implements CityService {
 
 	@Override
 	public Result<Object> deleteCity(int cityId) {
-		Result<Object> result = new Result<>(ResultEnum.SUCCESS.status, "Delete success.");
+		Result<Object> result = new Result<>(ResultStatus.SUCCESS.status, "Delete success.");
 		
 		try {
 			cityDao.deleteCity(cityId);
 		} catch (Exception e) {
-			result.setStatus(ResultEnum.FAILD.status);
+			result.setStatus(ResultStatus.FAILED.status);
 			result.setMessage(e.getMessage());
 		}
 		

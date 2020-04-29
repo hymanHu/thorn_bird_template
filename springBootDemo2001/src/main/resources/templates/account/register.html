@@ -1,0 +1,86 @@
+<div class="register-box">
+	<div class="register-logo">
+		<b>***</b>LTE
+	</div>
+
+	<div class="card">
+		<div class="card-body register-card-body">
+			<p class="login-box-msg">Register a new account</p>
+
+			<form action="javascript:void(0);" method="post">
+				<div class="input-group mb-3">
+					<input name="userName" type="text" class="form-control" placeholder="User Name">
+					<div class="input-group-append">
+						<div class="input-group-text">
+							<span class="fas fa-user"></span>
+						</div>
+					</div>
+				</div>
+				<div class="input-group mb-3">
+					<input name="password" type="password" class="form-control" placeholder="Password">
+					<div class="input-group-append">
+						<div class="input-group-text">
+							<span class="fas fa-lock"></span>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-8">
+						<div class="icheck-primary">
+							<input type="checkbox" id="agreeTerms" name="terms" value="agree">
+							<label for="agreeTerms"> I agree to the <a href="#">terms</a>
+							</label>
+						</div>
+					</div>
+					<!-- /.col -->
+					<div class="col-4">
+						<button name="registerBtn" type="submit" class="btn btn-primary btn-block">
+							Register</button>
+					</div>
+					<!-- /.col -->
+				</div>
+			</form>
+
+			<a href="/account/login" class="text-center">I already have a account</a>
+		</div>
+		<!-- /.form-box -->
+	</div>
+	<!-- /.card -->
+</div>
+
+<script type="text/javascript">
+jQuery(function($) {
+	$("[name='registerBtn']").bind("click", function(){
+		register();
+	})
+	
+});
+
+function register() {
+	if (!$("#agreeTerms").prop('checked')) {
+		layer.msg("Please check the terms", {icon: 0});
+		return;
+	}
+	
+	var user = {};
+	user.userName = $("[name='userName']").val();
+	user.password = $("[name='password']").val();
+	
+	$.ajax({
+		url : "/api/register",
+		type : "post",
+		contentType: "application/json",
+		data : JSON.stringify(user),
+		success : function (data) {
+			if (data.status == 200) {
+				location.href = "/common/dashboard";
+			} else {
+				layer.msg(data.message, {icon: 0});
+			}
+		},
+		error : function (data) {
+			layer.msg(data.responseText, {icon: 0});
+		}
+	});
+}
+</script>

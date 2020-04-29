@@ -69,12 +69,12 @@ public class Result<T> {
 		this.object = object;
 	}
 
-	public enum ResultEnum {
-		SUCCESS(200), FAILD(500);
+	public enum ResultStatus {
+		SUCCESS(200), FAILED(500);
 		
 		public int status;
 
-		private ResultEnum(int status) {
+		private ResultStatus(int status) {
 			this.status = status;
 		}
 	}
