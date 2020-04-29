@@ -10,13 +10,10 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.springframework.stereotype.Repository;
 
 import com.thornBird.sbd.modules.account.entity.User;
 import com.thornBird.sbd.modules.common.vo.SearchVo;
 
-
-@Repository
 @Mapper
 public interface UserDao {
 
@@ -54,7 +51,7 @@ public interface UserDao {
 			@Result(column="user_id", property="userId"),
 			@Result(column="user_id",property="roles",
 					javaType=List.class,
-					many=@Many(select="com.thornBird.springBootDemo.modules.account.dao."
+					many=@Many(select="com.thornBird.sbd.modules.account.dao."
 							+ "UserRoleDao.getRolesByUserId"))
 		})
 	User getUserById(int userId);

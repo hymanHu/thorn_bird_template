@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -28,6 +29,7 @@ public class ResourceServiceImpl implements ResourceService {
 	private RoleResourceDao roleResourceDao;
 
 	@Override
+	@Transactional
 	public Result<Resource> editResource(Resource resource) {
 		if (resource == null || StringUtils.isBlank(resource.getResourceUri()) ) {
 			return new Result<Resource>(500, "resource info is null");
@@ -52,17 +54,11 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
+	@Transactional
 	public Result<Resource> deleteResource(int resourceId) {
-		Result<Resource> result = new Result<Resource>(ResultStatus.SUCCESS.status, "");
-		try {
-			roleResourceDao.deletRoleResourceByResourceId(resourceId);
-			resourceDao.deleteResource(resourceId);
-		} catch (Exception e) {
-			result.setStatus(ResultStatus.FAILED.status);
-			result.setMessage(e.getMessage());
-		}
-		
-		return result;
+		roleResourceDao.deletRoleResourceByResourceId(resourceId);
+		resourceDao.deleteResource(resourceId);
+		return new Result<Resource>(ResultStatus.SUCCESS.status, "");
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -70,7 +66,9 @@ public class ResourceServiceImpl implements ResourceService {
 	public PageInfo<Resource> getResources(SearchVo searchVo) {
 		searchVo.initSearchVo(searchVo);
 		PageHelper.startPage(searchVo.getCurrentPage(), searchVo.getPageSize());
-		return new PageInfo(Optional.ofNullable(resourceDao.getResources()).orElse(Collections.emptyList()));
+		return new PageInfo(
+				Optional.ofNullable(resourceDao.getResources())
+				.orElse(Collections.emptyList()));
 	}
 
 	@Override

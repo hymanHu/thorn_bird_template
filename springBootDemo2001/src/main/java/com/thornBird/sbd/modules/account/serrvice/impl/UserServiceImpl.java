@@ -5,10 +5,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import javax.security.auth.Subject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -31,6 +30,7 @@ public class UserServiceImpl implements UserService {
 	private UserRoleDao userRoleDao;
 
 	@Override
+	@Transactional
 	public Result<User> insertUser(User user) {
 		Result<User> result = new Result<User>(ResultStatus.SUCCESS.status, "");
 		
@@ -110,9 +110,9 @@ public class UserServiceImpl implements UserService {
 	public PageInfo<User> getUsersBySearchVo(SearchVo searchVo) {
 		searchVo.initSearchVo(searchVo);
 		PageHelper.startPage(searchVo.getCurrentPage(), searchVo.getPageSize());
-		List<User> users = Optional.ofNullable(userDao.getUsersBySearchVo(searchVo))
-				.orElse(Collections.emptyList());
-		return new PageInfo(users);
+		return new PageInfo(
+				Optional.ofNullable(userDao.getUsersBySearchVo(searchVo))
+				.orElse(Collections.emptyList()));
 	}
 
 	@Override
@@ -121,15 +121,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public Result<User> updateUser(User user) {
-		
-		Result<User> result = new Result<User>(ResultStatus.SUCCESS.status, "");
 		
 		User userTemp = userDao.getUserByUserName(user.getUserName());
 		if (userTemp != null && user.getUserId() != userTemp.getUserId()) {
-			result.setStatus(ResultStatus.FAILED.status);
-			result.setMessage("User name is repeat.");
-			return result;
+			return new Result<User>(ResultStatus.FAILED.status, "User name is repeat.");
 		}
 		
 		userDao.updateUser(user);
@@ -141,19 +138,13 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		
-		return result;
+		return new Result<User>(ResultStatus.SUCCESS.status, "");
 	}
 
 	@Override
+	@Transactional
 	public Result<User> deleteUser(int userId) {
-		Result<User> result = new Result<User>(ResultStatus.SUCCESS.status, "");
-		try {
-			userDao.deleteUser(userId);
-		} catch (Exception e) {
-			result.setStatus(ResultStatus.FAILED.status);
-			result.setMessage(e.getMessage());
-			return result;
-		}
-		return result;
+		userDao.deleteUser(userId);
+		return new Result<User>(ResultStatus.SUCCESS.status, "");
 	}
 }

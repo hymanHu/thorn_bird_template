@@ -11,12 +11,9 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.springframework.stereotype.Repository;
 
 import com.thornBird.sbd.modules.account.entity.Resource;
 
-
-@Repository
 @Mapper
 public interface ResourceDao {
 
@@ -44,7 +41,7 @@ public interface ResourceDao {
 			@Result(column="resource_id", property="resourceId"),
 			@Result(column="resource_id",property="roles",
 					javaType=List.class,
-					many=@Many(select="com.thornBird.springBootDemo.modules.account.dao."
+					many=@Many(select="com.thornBird.sbd.modules.account.dao."
 							+ "RoleDao.getRolesByResourceId"))
 		})
 	Resource getResourceById(int resourceId);

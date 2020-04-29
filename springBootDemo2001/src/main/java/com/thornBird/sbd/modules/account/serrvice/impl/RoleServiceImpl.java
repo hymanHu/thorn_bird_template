@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -24,6 +25,7 @@ public class RoleServiceImpl implements RoleService {
 	private RoleDao roleDao;
 
 	@Override
+	@Transactional
 	public Result<Role> editRole(Role role) {
 		if (role == null || StringUtils.isBlank(role.getRoleName())) {
 			return new Result<Role>(ResultStatus.FAILED.status, "Role info is null");
@@ -39,15 +41,10 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
+	@Transactional
 	public Result<Role> deleteRole(int roleId) {
-		Result<Role> result = new Result<Role>(ResultStatus.SUCCESS.status, "");
-		try {
-			roleDao.deleteRole(roleId);
-		} catch (Exception e) {
-			result.setStatus(ResultStatus.FAILED.status);
-			result.setMessage(e.getMessage());
-		}
-		return result;
+		roleDao.deleteRole(roleId);
+		return new Result<Role>(ResultStatus.SUCCESS.status, "");
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
