@@ -52,7 +52,7 @@ public interface UserDao {
 			@Result(column="user_id",property="roles",
 					javaType=List.class,
 					many=@Many(select="com.thornBird.sbd.modules.account.dao."
-							+ "UserRoleDao.getRolesByUserId"))
+							+ "RoleDao.getRolesByUserId"))
 		})
 	User getUserById(int userId);
 	

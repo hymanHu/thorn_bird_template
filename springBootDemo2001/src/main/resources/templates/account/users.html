@@ -56,6 +56,7 @@
 	<!-- /.row -->
 	
 	<div th:replace="account/userAdd :: userAdd"></div>
+	<div th:replace="account/userEdit :: userEdit"></div>
 </section>
 
 <!-- DataTables -->
@@ -67,8 +68,14 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	initTable(DEFAULT_CURRENT_PAGE, DEFAULT_PAGE_SIZE);
+	$("#btnAdd").bind("click", function(){
+		initAddModal();
+	})
 	$("#userAddBtn").bind("click", function(){
 		insertUser();
+	})
+	$("#userEditBtn").bind("click", function(){
+		updateUser();
 	})
 });
 
@@ -160,9 +167,34 @@ function TData(userId, userName, password, createDate) {
 	this.createDate = createDate;
 	this.operate = function () {
 		return "<a href='#' class='btn_editcolor' data-toggle='modal' " + 
-			"data-target='#classEditModal' onclick='initEditModal(\"" + userId + "\")'>编辑</a>&nbsp;" + 
+			"data-target='#userEditModal' onclick='initEditModal(\"" + userId + "\")'>编辑</a>&nbsp;" + 
 			"<a href='javascript:void(0);' onclick='deleteUser(\"" + userId + "\")' class='btn_editcolor'>删除</a>";
 	}
+}
+
+//初始化添加页面
+function initAddModal() {
+	$("#rolesForUserAdd").empty();
+	$.ajax({
+		url : "/api/roles",
+		type : "get",
+		contentType: "application/json",
+		success : function (rs) {
+			$("#rolesForUserAdd").append("<label class='middle'>");
+			$.each(rs, function(i, value) {
+				$("#rolesForUserAdd").append("<input name='roleCheckboxForUserAdd' value='" + 
+						value.roleId +"' class='ace' type='checkbox'>");
+				$("#rolesForUserAdd").append("<span class='lbl'>" + 
+						value.roleName + "</span>&nbsp;");
+			});
+			$("#rolesForUserAdd").append("</label>");
+		},
+		error : function (data) {
+			layer.alert(data.responseText, {icon: 0});
+		}
+	});
+	$("#userNameForAddPage").val("");
+	$("#passwordForAddPage").val("");
 }
 
 // 添加user
@@ -188,4 +220,77 @@ function insertUser() {
 		}
 	});
 }
+
+// 初始化编辑页面
+function initEditModal(userId) {
+	$.ajax({
+		url : "/api/user/" + userId,
+		type : "get",
+		contentType: "application/json",
+		success : function (rs) {
+			$("#userIdForEditPage").val(rs.userId);
+			$("#userNameForEditPage").val(rs.userName);
+		},
+		error : function (data) {
+			layer.alert(data.responseText, {icon: 0});
+		}
+	});
+}
+
+function updateUser() {
+	var user = {};
+	user.userId = $("#userIdForEditPage").val();
+	user.userName = $("#userNameForEditPage").val();
+
+	$.ajax({
+		url : "/api/user",
+		type : "put",
+		contentType: "application/json",
+		data : JSON.stringify(teacher),
+		success : function (rs) {
+			if (rs.status == 200) {
+				initTable(DEFAULT_CURRENT_PAGE, DEFAULT_PAGE_SIZE);
+			} else {
+				layer.alert(rs.message, {icon: 0});
+			}
+		},
+		error : function (data) {
+			layer.alert(data.responseText, {icon: 0});
+		}
+	});
+}
+
+function deleteUser(teacherNo) {
+	swal({
+		title: "Are you sure?",
+		text: "You will not be able to recover this imaginary file!",
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonText: "Yes, delete it!",
+		cancelButtonText: "No, cancel plx!",
+		closeOnConfirm: false,
+		closeOnCancel: false
+	}, function(isConfirm) {
+		if (isConfirm) {
+			$.ajax({
+				url : "/api/user/" + userId,
+				type : "delete",
+				success : function (rs) {
+					if (rs.status == 200) {
+						swal("Deleted!", "Your imaginary file has been deleted.", "success");
+						initTable(DEFAULT_CURRENT_PAGE, DEFAULT_PAGE_SIZE);
+					} else {
+						layer.alert(rs.message, {icon: 0});
+					}
+				},
+				error : function (data) {
+					layer.alert(data.responseText, {icon: 0});
+				}
+			});
+		} else {
+			swal("Cancelled", "Your imaginary file is safe :)", "error");
+		}
+	});
+}
+
 </script>
