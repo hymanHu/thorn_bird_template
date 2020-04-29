@@ -1,3 +1,6 @@
+var DEFAULT_CURRENT_PAGE = 1;
+var DEFAULT_PAGE_SIZE = 5;
+
 // 加载页面就需要执行的js代码块
 $(document).ready(function() {
 	

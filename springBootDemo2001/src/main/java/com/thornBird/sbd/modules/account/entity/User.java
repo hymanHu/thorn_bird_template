@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * 用户类
  * 
@@ -24,6 +26,7 @@ public class User {
 	private int userId;
 	private String userName;
 	private String password;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date createDate;
 	
 	@Transient
