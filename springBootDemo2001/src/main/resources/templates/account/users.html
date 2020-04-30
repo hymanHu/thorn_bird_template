@@ -83,7 +83,7 @@ $(document).ready(function() {
 function initTable(currentPage, pageSize){
 	$('#usersTable').DataTable({
 		'paging': true, //分页
-		"serverSide": true, //开启后端分页
+		"serverSide": true, //开启service支持
 		"pagingType": "full_numbers", //分页样式的类型simple/simple_numbers/full/full_numbers
 		"pageLength": pageSize, //定义初始的页长
 		"processing": true, 
@@ -183,8 +183,8 @@ function initAddModal() {
 // 添加user
 function insertUser() {
 	var user = {};
-	user.userName = $("[name='userName']").val();
-	user.password = $("[name='password']").val();
+	user.userName = $("#userNameForAddPage").val();
+	user.password = $("#passwordForAddPage").val();
 	var roles = new Array();
 	$.each($("input[name='roleForAddPage']"), function(){
 		if(this.checked){
@@ -224,6 +224,10 @@ function initEditModal(userId) {
 		success : function (rs) {
 			$("#userIdForEditPage").val(rs.userId);
 			$("#userNameForEditPage").val(rs.userName);
+			$.each(rs.roles, function(i, item){
+				$("input[name='roleForEditPage'][value=" + item.roleId + "]")
+					.attr("checked","checked");
+			});
 		},
 		error : function (data) {
 			layer.alert(data.responseText, {icon: 0});

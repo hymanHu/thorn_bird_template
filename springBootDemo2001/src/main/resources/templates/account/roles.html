@@ -173,7 +173,7 @@ function initAddModal() {
 // 添加role
 function insertRole() {
 	var role = {};
-	role.roleName = $("[name='roleName']").val();
+	role.roleName = $("#roleNameForAddPage").val();
 	
 	$.ajax({
 		url : "/api/role",

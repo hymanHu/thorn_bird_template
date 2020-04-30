@@ -590,7 +590,19 @@ aop
 	数据准备 || 数据处理
 注册、登录模块
 列表使用
-	
+	分页接口 ----- 返回pageinfo对象 ----- total、list（当前页对象列表）
+	页面
+		html ---- table（表头信息thead、tbody为空） ---- 为啥不用标签渲染页面（页面按钮触发事件，需要自定义相应的js，非常麻烦）
+		js插件 ---- Simple Tables、DataTables、jsGrid
+		使用步骤
+			套路一：引入相应的css、js
+			套路二：配置
+				如何封装pageinfo --- fData｛gearDatas｝
+			套路三：应用
+				html修改显示那些列 ---- js定义行数据对象 ---- 创建初始化表格的方法，进行相关配置 ---- ajax ：rowData ---- columns（列名和entity数据的绑定）
+				js ready 模块调用初始化表格方法
+				
+		DataTables、模态框、bootbox确认框
 	
 		
 		
