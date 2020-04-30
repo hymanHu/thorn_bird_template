@@ -174,7 +174,7 @@ function TData(resourceId, resourceName, resourceUri, permission) {
 
 //初始化添加页面
 function initAddModal() {
-	initRoles("roleForAddPage");
+	initRoles("rolesForAddPage", "roleForAddPage");
 	
 	$("#resourceNameForAddPage").val("");
 	$("#resourceUriForAddPage").val("");
@@ -217,7 +217,7 @@ function insertResource() {
 
 // 初始化编辑页面
 function initEditModal(resourceId) {
-	initRoles("roleForEditPage");
+	initRoles("rolesForEditPage", "roleForEditPage");
 	
 	$.ajax({
 		url : "/api/resource/" + resourceId,

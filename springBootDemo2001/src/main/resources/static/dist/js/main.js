@@ -23,19 +23,19 @@ jQuery(function($) {
 	});
 });
 
-function initRoles(roleName) {
-	$("[name='roles']").empty();
+function initRoles(rolesDiv, roleName) {
+	$("#" + rolesDiv + "").empty();
 	$.ajax({
 		url : "/api/roles",
 		type : "get",
 		contentType: "application/json",
 		success : function (rs) {
-			$("[name='roles']").append("<label class='middle'>");
+			$("#" + rolesDiv + "").append("<label class='middle'>");
 			$.each(rs, function(i, value) {
-				$("[name='roles']").append("<input name='"+ roleName + "' value='" + 
+				$("#" + rolesDiv + "").append("<input name='"+ roleName + "' value='" + 
 						value.roleId +"' type='checkbox'>" + value.roleName + "&nbsp;&nbsp;");
 			});
-			$("[name='roles']").append("</label>");
+			$("#" + rolesDiv + "").append("</label>");
 		},
 		error : function (data) {
 			layer.alert(data.responseText, {icon: 0});
