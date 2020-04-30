@@ -174,7 +174,7 @@ function TData(userId, userName, password, createDate) {
 
 //初始化添加页面
 function initAddModal() {
-	initRoles("roleForAddPage");
+	initRoles("userForAddPage");
 	
 	$("#userNameForAddPage").val("");
 	$("#passwordForAddPage").val("");
@@ -186,7 +186,7 @@ function insertUser() {
 	user.userName = $("#userNameForAddPage").val();
 	user.password = $("#passwordForAddPage").val();
 	var roles = new Array();
-	$.each($("input[name='roleForAddPage']"), function(){
+	$.each($("input[name='userForAddPage']"), function(){
 		if(this.checked){
 			var role = {};
 			role.roleId = $(this).val();
@@ -215,7 +215,7 @@ function insertUser() {
 
 // 初始化编辑页面
 function initEditModal(userId) {
-	initRoles("roleForEditPage");
+	initRoles("userForEditPage");
 	
 	$.ajax({
 		url : "/api/user/" + userId,
@@ -225,7 +225,7 @@ function initEditModal(userId) {
 			$("#userIdForEditPage").val(rs.userId);
 			$("#userNameForEditPage").val(rs.userName);
 			$.each(rs.roles, function(i, item){
-				$("input[name='roleForEditPage'][value=" + item.roleId + "]")
+				$("input[name='userForEditPage'][value=" + item.roleId + "]")
 					.attr("checked","checked");
 			});
 		},
@@ -240,7 +240,7 @@ function updateUser() {
 	user.userId = $("#userIdForEditPage").val();
 	user.userName = $("#userNameForEditPage").val();
 	var roles = new Array();
-	$.each($("input[name='roleForEditPage']"), function(){
+	$.each($("input[name='userForEditPage']"), function(){
 		if(this.checked){
 			var role = {};
 			role.roleId = $(this).val();

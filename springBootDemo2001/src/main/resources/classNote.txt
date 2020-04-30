@@ -603,6 +603,73 @@ aop
 				js ready 模块调用初始化表格方法
 				
 		DataTables、模态框、bootbox确认框
+==================================================================
+shiro
+	介绍：
+		apache、java、身份验证、授权、密码、会话管理……
+		区别
+			spring security：比较繁琐、感念复杂、配置较多、功能比较强大
+			shiro：感念简单、配置比较简单、功能简单些
+		功能
+			身份验证、资源授权
+			MD5、会话管理、rememberMe
+		组件
+			reaml --- 完成两大核心功能的逻辑
+			securitymanager ---- 和安全相关的组件，全部注入它
+			shirofilterfactorybean ---- 过滤器工厂，url放行规则
+			subject ---- 应用层代码和shiro其它组件交互的对象；
+			-------------
+			shiro方言、shiro注解、记住我组件
+		注解
+			@RequiresAuthentication : 表示当前 Subject 已经认证登录的用户才能调用的代码块。
+			@RequiresUser : 表示当前 Subject 已经身份验证或通过记住我登录的。
+			@RequiresGuest : 表示当前 Subject 没有身份验证，即是游客身份。
+			@RequiresRoles(value={"admin", "user"}, logical=Logical.AND)
+			@RequiresPermissions (value={"***","***"}, logical= Logical.OR)
+		jsp标签
+			<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro" %> ---- 导入标签库；
+			<shiro:guest></shiro:guest>  ---- 游客访问信息；
+			<shiro:user></shiro:user> ---- 记住我访问；
+			<shiro:authenticated></shiro:authenticated> ---- 通过验证访问；
+			<shiro:hasRole name="admin"></shiro:hasRole> ---- 拥有某种角色访问；
+			<shiro:hasAnyRoles name="admin,user"></shiro:hasAnyRoles> ---- 拥有某些角色访问；
+			<shiro:hasPermission name="user:create"></shiro:hasPermission> ---- 拥有某资源访问；
+		thymleaf标签
+			html ---- xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+			shiro:guest ---- 用户没有身份验证时显示相应信息，即游客访问信息；
+			shiro:user ---- 用户已经身份验证/记住我登录后显示相应的信息；
+			shiro:authenticated ---- 用户已经身份验证通过，即Subject.login登录成功，不是记住我登录的；
+			shiro:hasRole；
+			shiro:hasAnyRoles ---- <li shiro:hasAnyRoles="admin,manager">；
+			shiro:hasPermission；
+	回顾ssm
+		套路顺序1：pom ---- shiro-core、shiro-web、shiro-spring、shiro-ehcache
+		套路顺序2：配置
+			web.xml ---- shiroFilter
+			springShiro.xml
+				myRealm、securityManager、shiroFilter
+				cacheManager、sessionManager、rememberMeCookie、lifecycleBeanPostProcessor、logout
+			springmvc.xml
+				开启shiro注解
+		套路顺序3：应用
+			Subject ---- 包装令牌UsernamePasswordToken ---- login（调用1得到身份验证器，将令牌和身份验证器比对，一致成功，不一致返回错误） ---- checkRoles（调用2得到资源验证器，后续的访问，资源验证器和页面标签比对、资源验证器和方法注解比对 ---- 字符串比对 ---- 一致则有访问权限，无则不显示或报错）
+			1、myRealm身份验证 ---- 得到页面输入的用户名 ---- 根据用户名查询user ---- 返回身份验证器
+			2、myrealm资源授权 ---- 得到页面输入的用户名 ---- 根据用户名查询user、roles、resources ---- 返回资源验证器
+	spring boot
+		套路顺序1：pom ---- shiro-spring-boot-web-starter、thymeleaf-extras-shiro
+		套路顺序2：配置
+			application.properties ---- 开启shiro
+			将之前xml配置内容 ---- 移植 ---- 配置类
+		套路顺序3：应用
+			Subject ---- 包装令牌UsernamePasswordToken ---- login（调用1得到身份验证器，将令牌和身份验证器比对，一致成功，不一致返回错误） ---- checkRoles（调用2得到资源验证器，后续的访问，资源验证器和页面标签比对、资源验证器和方法注解比对 ---- 字符串比对 ---- 一致则有访问权限，无则不显示或报错）
+			1、myRealm身份验证 ---- 得到页面输入的用户名 ---- 根据用户名查询user ---- 返回身份验证器
+			2、myrealm资源授权 ---- 得到页面输入的用户名 ---- 根据用户名查询user、roles、resources ---- 返回资源验证器
+	采坑：
+		eclipse启动时候一定要注意，要么从main方法启动，要么，选择工具栏上的启动按钮时候，一定要注意查看启动的是否是自己要启动的项目 ---- 启动了别人的项目，在自己的项目上进行调试，无任何效果，无法访问页面
+		
+			
+			
+			
 	
 		
 		

@@ -1,5 +1,7 @@
 package com.thornBird.sbd.modules.account.controller;
 
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,7 +50,7 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/user/{userId}")
-//	@RequiresPermissions(value={"DeleteUser1"}, logical= Logical.OR) 
+	@RequiresPermissions(value={"deleteUser"}, logical= Logical.OR) 
 	public Result<User> deleteUser(@PathVariable int userId) {
 		return userService.deleteUser(userId);
 	}

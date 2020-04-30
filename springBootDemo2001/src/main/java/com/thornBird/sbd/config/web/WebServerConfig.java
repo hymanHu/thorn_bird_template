@@ -1,4 +1,4 @@
-package com.thornBird.sbd.config;
+package com.thornBird.sbd.config.web;
 
 import org.apache.catalina.connector.Connector;
 import org.springframework.beans.factory.annotation.Value;

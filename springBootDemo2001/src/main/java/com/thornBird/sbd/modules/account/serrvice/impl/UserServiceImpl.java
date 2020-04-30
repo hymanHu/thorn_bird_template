@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,20 +80,14 @@ public class UserServiceImpl implements UserService {
 	public Result<User> login(User user) {
 		Result<User> result = new Result<User>(ResultStatus.SUCCESS.status, "");
 		
-		User userTemp = userDao.getUserByUserName(user.getUserName());
-		if (userTemp == null || !userTemp.getPassword().equals(MD5Util.getMD5(user.getPassword()))) {
-			result.setStatus(ResultStatus.FAILED.status);
-			result.setMessage("User name or password error.");
-		}
-		
 		try {
-//			Subject subject = SecurityUtils.getSubject();
-//			UsernamePasswordToken usernamePasswordToken = 
-//					new UsernamePasswordToken(user.getUserName(), MD5Util.getMD5(user.getPassword()));
-//			usernamePasswordToken.setRememberMe(user.getRememberMe());
-//			
-//			subject.login(usernamePasswordToken);
-//			subject.checkRoles();
+			Subject subject = SecurityUtils.getSubject();
+			UsernamePasswordToken usernamePasswordToken = 
+					new UsernamePasswordToken(user.getUserName(), MD5Util.getMD5(user.getPassword()));
+			usernamePasswordToken.setRememberMe(user.getRememberMe());
+			
+			subject.login(usernamePasswordToken);
+			subject.checkRoles();
 		} catch (Exception e) {
 			result.setStatus(ResultStatus.FAILED.status);
 			result.setMessage(e.getMessage());
