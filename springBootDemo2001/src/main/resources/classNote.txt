@@ -666,6 +666,26 @@ shiro
 			2、myrealm资源授权 ---- 得到页面输入的用户名 ---- 根据用户名查询user、roles、resources ---- 返回资源验证器
 	采坑：
 		eclipse启动时候一定要注意，要么从main方法启动，要么，选择工具栏上的启动按钮时候，一定要注意查看启动的是否是自己要启动的项目 ---- 启动了别人的项目，在自己的项目上进行调试，无任何效果，无法访问页面
+==================================================================
+错误的统一处理
+	需求：针对不同的错误信息，跳转到不同的错误页面
+	知识准备
+		准备全局错误页面/error
+			BasicErrorController
+				@RequestMapping("${server.error.path:${error.path:/error}}")
+				${server.error.path} ---- ${error.path} ---- /error
+				classpath:/templates/error.html
+				判断 ? value1 : value2;
+			添加classpath:/templates/error.html
+		准备独立的错误页面：/403
+		异常处理使用到的注解
+			@ControllerAdvice ---- 全局异常处理，捕获所有控制器中的异常 ----- 类上；
+			@ExceptionHandler ---- 局部，捕获某类异常 ----- 方法上；
+	应用
+		套路顺序1：pom ---- 无需引入相应的jar
+		套路顺序2：配置 ---- 无需进行配置
+		套路顺序3：应用
+			全局错误控制器
 		
 			
 			

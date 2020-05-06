@@ -277,7 +277,8 @@ function deleteUser(userId) {
 					if (rs.status == 200) {
 						initTable(DEFAULT_CURRENT_PAGE, DEFAULT_PAGE_SIZE);
 					} else {
-						layer.alert(rs.message, {icon: 0});
+						//layer.alert(rs.message, {icon: 0});
+						location.href = rs.object;
 					}
 				},
 				error : function (data) {
