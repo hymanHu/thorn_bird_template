@@ -66,8 +66,9 @@ public class ShiroConfig {
 		map.put("/test/**", "anon");
 		
 		// 如果使用“记住我功能”，则采用user规则，如果必须要用户登录，则采用authc规则
+		map.put("/**", "anon");
 //		map.put("/**", "user");
-		map.put("/**", "authc");
+//		map.put("/**", "authc");
 //		map.put("/pay/**", "authc");
 		bean.setFilterChainDefinitionMap(map);
 		

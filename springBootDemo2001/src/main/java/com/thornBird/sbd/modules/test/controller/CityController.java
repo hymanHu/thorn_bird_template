@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
 import com.thornBird.sbd.modules.common.vo.Result;
+import com.thornBird.sbd.modules.common.vo.SearchVo;
 import com.thornBird.sbd.modules.test.entity.City;
 import com.thornBird.sbd.modules.test.service.CityService;
 
@@ -46,6 +47,14 @@ public class CityController {
 	public City getCityByName(@RequestParam(required=false) String cityName, 
 			@RequestParam(required=false) String localCityName) {
 		return cityService.getCityByName(cityName, localCityName);
+	}
+	
+	/**
+	 * 127.0.0.1/api/cities
+	 */
+	@PostMapping(value = "/cities", consumes = "application/json")
+	public PageInfo<City> getCitiesBySearchVo(@RequestBody SearchVo searchVo) {
+		return cityService.getCitiesBySearchVo(searchVo);
 	}
 	
 	@PostMapping(value="/city", consumes="application/json")

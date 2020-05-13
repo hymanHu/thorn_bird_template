@@ -14,6 +14,15 @@ public class SearchVo {
 	private String orderBy;
 	private String sort;
 	
+	public void initSearchVo() {
+		if (this != null) {
+			this.setCurrentPage(this.getCurrentPage() == 0 ? 
+					DEFAULT_CURRENT_PAGE : this.getCurrentPage());
+			this.setPageSize(this.getPageSize() == 0 ? 
+					DEFAULT_PAGE_SIZE : this.getPageSize());
+		}
+	}
+	
 	public void initSearchVo(SearchVo searchVo) {
 		searchVo.setCurrentPage(searchVo.getCurrentPage() == 0 ? 
 				DEFAULT_CURRENT_PAGE : searchVo.getCurrentPage());

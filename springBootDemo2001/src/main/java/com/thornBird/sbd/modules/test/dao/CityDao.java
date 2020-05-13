@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.thornBird.sbd.modules.common.vo.SearchVo;
 import com.thornBird.sbd.modules.test.entity.City;
 
 //@Repository
@@ -42,6 +43,25 @@ public interface CityDao {
 			+ "</where>"
 			+ "</script>")
 	List<City> getCityByName2(@Param("cityName") String cityName, @Param("localCityName") String localCityName);
+	
+	@Select("<script>" + 
+			"select * from m_city "
+			+ "<where> "
+			+ "<if test='keyWord != \"\" and keyWord != null'>"
+			+ "and (city_name like '%${keyWord}%' or "
+			+ " local_city_name like '%${keyWord}%') "
+			+ "</if>"
+			+ "</where>"
+			+ "<choose>"
+			+ "<when test='orderBy != \"\" and orderBy != null'>"
+			+ "order by ${orderBy} ${sort}"
+			+ "</when>"
+			+ "<otherwise>"
+			+ "order by city_id desc"
+			+ "</otherwise>"
+			+ "</choose>"
+			+ "</script>")
+	List<City> getCitiesBySearchVo(SearchVo searchVo);
 	
 	@Insert("insert into m_city (city_name, local_city_name, country_id, date_created) "
 			+ "values (#{cityName}, #{localCityName}, #{countryId}, #{dateCreated})")

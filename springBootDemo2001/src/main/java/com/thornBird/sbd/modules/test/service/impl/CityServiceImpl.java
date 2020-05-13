@@ -12,6 +12,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.thornBird.sbd.modules.common.vo.Result;
 import com.thornBird.sbd.modules.common.vo.Result.ResultStatus;
+import com.thornBird.sbd.modules.common.vo.SearchVo;
 import com.thornBird.sbd.modules.test.dao.CityDao;
 import com.thornBird.sbd.modules.test.entity.City;
 import com.thornBird.sbd.modules.test.service.CityService;
@@ -44,6 +45,15 @@ public class CityServiceImpl implements CityService {
 		List<City> cities = Optional.ofNullable(cityDao.getCityByName2(cityName, localCityName))
 				.orElse(Collections.emptyList());
 		return cities.isEmpty() ? null : cities.get(0);
+	}
+
+	@Override
+	public PageInfo<City> getCitiesBySearchVo(SearchVo searchVo) {
+		searchVo.initSearchVo();
+		PageHelper.startPage(searchVo.getCurrentPage(), searchVo.getPageSize());
+		return new PageInfo<City>(
+				Optional.ofNullable(cityDao.getCitiesBySearchVo(searchVo))
+				.orElse(Collections.emptyList()));
 	}
 
 	@Override
