@@ -7,4 +7,6 @@ public interface CountryService {
 	Country getCountryById(int countryId);
 	
 	Country getCountryByName(String countryName);
+	
+	Object migrateCountryByCountryId(int countryId);
 }

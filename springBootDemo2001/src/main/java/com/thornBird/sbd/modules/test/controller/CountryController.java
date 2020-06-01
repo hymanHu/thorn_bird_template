@@ -31,4 +31,12 @@ public class CountryController {
 	public Country getCountryByName(@RequestParam String countryName) {
 		return countryService.getCountryByName(countryName);
 	}
+	
+	/**
+	 * http://127.0.0.1/api/redis/country/522
+	 */
+	@RequestMapping("/redis/country/{countryId}")
+	public Object migrateCountryByCountryId(@PathVariable int countryId) {
+		return countryService.migrateCountryByCountryId(countryId);
+	}
 }
