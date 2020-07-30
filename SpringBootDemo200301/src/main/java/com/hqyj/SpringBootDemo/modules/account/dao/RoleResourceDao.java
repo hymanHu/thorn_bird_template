@@ -4,8 +4,10 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 @Mapper
+@Repository
 public interface RoleResourceDao {
 
 	@Delete("delete from role_resource where resource_id = #{resourceId}")

@@ -11,8 +11,10 @@ import org.apache.ibatis.annotations.Update;
 
 import com.hqyj.SpringBootDemo.modules.account.entity.Role;
 import com.hqyj.SpringBootDemo.modules.common.vo.SearchVo;
+import org.springframework.stereotype.Repository;
 
 @Mapper
+@Repository
 public interface RoleDao {
 
 	@Select("select * from role")

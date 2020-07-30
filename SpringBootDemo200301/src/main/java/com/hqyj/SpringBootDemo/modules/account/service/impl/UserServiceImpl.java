@@ -1,24 +1,5 @@
 package com.hqyj.SpringBootDemo.modules.account.service.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hqyj.SpringBootDemo.config.ResourceConfigBean;
@@ -32,6 +13,23 @@ import com.hqyj.SpringBootDemo.modules.common.vo.Result.ResultStatus;
 import com.hqyj.SpringBootDemo.modules.common.vo.SearchVo;
 import com.hqyj.SpringBootDemo.utils.FileUtil;
 import com.hqyj.SpringBootDemo.utils.MD5Util;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.transaction.Transactional;
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -112,7 +110,7 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		user.setPassword(MD5Util.getMD5(user.getPassword()));
-		user.setCreateDate(new Date());
+		user.setCreateDate(LocalDateTime.now());
 
 		// 管理员编辑用户信息时，只修改用户角色
 		if (user.getUserId() > 0) {

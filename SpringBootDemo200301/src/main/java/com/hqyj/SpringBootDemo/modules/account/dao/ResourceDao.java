@@ -14,8 +14,10 @@ import org.apache.ibatis.annotations.Update;
 
 import com.hqyj.SpringBootDemo.modules.account.entity.Resource;
 import com.hqyj.SpringBootDemo.modules.common.vo.SearchVo;
+import org.springframework.stereotype.Repository;
 
 @Mapper
+@Repository
 public interface ResourceDao {
 
 	@Insert("insert resource(resource_name, resource_uri, permission) value(#{resourceName}, "

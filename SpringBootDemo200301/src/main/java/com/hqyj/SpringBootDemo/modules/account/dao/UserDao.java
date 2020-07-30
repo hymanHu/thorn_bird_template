@@ -14,8 +14,10 @@ import org.apache.ibatis.annotations.Update;
 
 import com.hqyj.SpringBootDemo.modules.account.entity.User;
 import com.hqyj.SpringBootDemo.modules.common.vo.SearchVo;
+import org.springframework.stereotype.Repository;
 
 @Mapper
+@Repository
 public interface UserDao {
 
 	@Insert("insert into user (user_name, password, create_date) "

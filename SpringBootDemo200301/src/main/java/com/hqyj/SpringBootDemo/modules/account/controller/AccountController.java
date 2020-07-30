@@ -21,7 +21,7 @@ public class AccountController {
 	public String loginPage() {
 		return "indexSimple";
 	}
-	
+
 	@RequestMapping("/logout")
 	public String logOut(ModelMap modelMap) {
 		userService.logout();

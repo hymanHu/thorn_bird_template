@@ -1,17 +1,11 @@
 package com.hqyj.SpringBootDemo.modules.account.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 用户类
@@ -26,12 +20,13 @@ public class User implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userId;
+	@Column(name = "user_name", length = 100)
 	private String userName;
 	private String password;
 	private String userImg;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private Date createDate;
-	
+	private LocalDateTime createDate;
+
 	@Transient
 	private String accountName;
 	
@@ -64,11 +59,11 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
-	public Date getCreateDate() {
+	public LocalDateTime getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
 	}
 
