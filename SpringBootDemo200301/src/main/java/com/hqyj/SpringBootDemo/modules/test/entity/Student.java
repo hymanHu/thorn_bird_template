@@ -29,7 +29,7 @@ public class Student {
      * JoinColumn
      * name 对应 h_student 表中 card_id 外键列
      * referencedColumnName 对应关联表 Card 中的主键 cardId
-     * insertable\updatable 标识该属性是否参与插入和更新插入
+     * insertable、updatable 标识该属性是否参与插入和更新插入
      * JsonIgnore：不序列化该字段，避免无限递归
      */
     @OneToOne(targetEntity = Card.class, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)

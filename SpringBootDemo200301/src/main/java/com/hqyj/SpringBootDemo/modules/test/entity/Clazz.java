@@ -24,7 +24,7 @@ public class Clazz {
      * fetch：加载数据策略
      * JoinColumn
      * name：多方 h_clazz 表的外键 school_id
-     * insertable\updatable：标识该属性是否参与插入和更新插入
+     * insertable、updatable：标识该属性是否参与插入和更新插入
      * JsonIgnore：不序列化该字段，避免无限递归
      */
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
