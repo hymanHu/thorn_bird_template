@@ -1,7 +1,6 @@
 package com.hqyj.SpringBootDemo.modules.test.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -33,8 +32,7 @@ public class Student {
      * JsonIgnore：不序列化该字段，避免无限递归
      */
     @OneToOne(targetEntity = Card.class, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "card_id", insertable = false, updatable = false)
-    @JsonIgnore
+    @JoinColumn(name = "card_id")
     private Card studentCard;
 
     /**
@@ -75,5 +73,13 @@ public class Student {
 
     public void setClazzes(List<Clazz> clazzes) {
         this.clazzes = clazzes;
+    }
+
+    public Card getStudentCard() {
+        return studentCard;
+    }
+
+    public void setStudentCard(Card studentCard) {
+        this.studentCard = studentCard;
     }
 }

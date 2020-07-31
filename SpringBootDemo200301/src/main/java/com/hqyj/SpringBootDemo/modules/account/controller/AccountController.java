@@ -1,12 +1,16 @@
 package com.hqyj.SpringBootDemo.modules.account.controller;
 
+/**
+ * @Description
+ * @Author HymanHu
+ * @Date 2020/7/31 9:40
+ */
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hqyj.SpringBootDemo.modules.account.service.UserService;
-
 @Controller
 @RequestMapping("/account")
 public class AccountController {

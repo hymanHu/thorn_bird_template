@@ -1,6 +1,10 @@
 package com.hqyj.SpringBootDemo.config.shiro;
 
-import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import org.apache.shiro.codec.Base64;
+import org.apache.shiro.crypto.AesCipherService;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
+import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
@@ -11,17 +15,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
-import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import javax.servlet.Filter;
-
-import org.apache.shiro.codec.Base64;
-import org.apache.shiro.crypto.AesCipherService;
-import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
-import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 
 @Configuration
 public class ShiroConfig {

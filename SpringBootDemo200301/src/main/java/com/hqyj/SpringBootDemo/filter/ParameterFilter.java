@@ -1,20 +1,14 @@
 package com.hqyj.SpringBootDemo.filter;
 
-import java.io.IOException;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import java.io.IOException;
 
 @WebFilter(filterName = "ParameterFilter", urlPatterns = "/**")
 public class ParameterFilter implements Filter {
@@ -55,6 +49,9 @@ public class ParameterFilter implements Filter {
 			@Override
 			public String[] getParameterValues(String name) {
 				String[] values = httpRequest.getParameterValues(name);
+				if (values == null) {
+					return new String[]{};
+				}
 				for (int i = 0; i < values.length; i ++) {
 					String temp = values[i];
 					if (StringUtils.isNotBlank(temp) && temp.contains("fuck")) {
