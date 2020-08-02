@@ -1,13 +1,13 @@
 package com.hqyj.SpringBootDemo.modules.test.repository;
 
-import com.hqyj.SpringBootDemo.modules.test.entity.Student;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.hqyj.SpringBootDemo.modules.test.entity.Student;
 
 /**
  * @Description: Student Repository
@@ -15,7 +15,7 @@ import java.util.List;
  * @date: 2020年7月30日
  */
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Integer>, JpaSpecificationExecutor<Student> {
+public interface StudentRepository extends JpaRepository<Student, Integer> {
 
     List<Student> findByStudentName(String studentName);
 

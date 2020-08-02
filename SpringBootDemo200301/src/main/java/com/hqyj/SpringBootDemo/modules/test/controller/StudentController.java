@@ -41,8 +41,8 @@ public class StudentController {
 
 	/**
 	 * 127.0.0.1/api/students ---- post
-	 * 注意，orderBy 属性包装的是类属性，而非表字段
-	 * {"currentPage":"1","pageSize":"2","orderBy":"studentId","sort":"desc"}
+	 * -注意，orderBy 属性包装的是类属性，而非表字段
+	 * {"currentPage":"1","pageSize":"5","orderBy":"studentId","sort":"desc","keyWord":"hu"}
 	 */
 	@PostMapping(value = "/students", consumes = "application/json")
 	public Page<Student> getStudentsBySearchVo(@RequestBody SearchVo searchVo) {
