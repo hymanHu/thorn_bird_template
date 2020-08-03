@@ -1,26 +1,20 @@
 package com.hqyj.SpringBootDemo.modules.test.service.impl;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-
 import com.hqyj.SpringBootDemo.modules.common.vo.Result;
 import com.hqyj.SpringBootDemo.modules.common.vo.Result.ResultStatus;
 import com.hqyj.SpringBootDemo.modules.common.vo.SearchVo;
 import com.hqyj.SpringBootDemo.modules.test.entity.Student;
 import com.hqyj.SpringBootDemo.modules.test.repository.StudentRepository;
 import com.hqyj.SpringBootDemo.modules.test.service.StudentService;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @Description: Student Service Impl
@@ -61,7 +55,7 @@ public class StudentServiceImpl implements StudentService {
 		student.setStudentName(searchVo.getKeyWord());
 		ExampleMatcher matcher = ExampleMatcher.matching()
 				// 全部模糊查询，即 %{studentName} %
-				.withMatcher("studentName", ExampleMatcher.GenericPropertyMatchers.contains())
+				//.withMatcher("studentName", ExampleMatcher.GenericPropertyMatchers.contains())
 				.withMatcher("studentName", match -> match.contains())
 				// 忽略字段，即不管password是什么值都不加入查询条件
 				.withIgnorePaths("studentId");
