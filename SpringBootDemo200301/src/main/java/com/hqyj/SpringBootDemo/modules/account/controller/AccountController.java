@@ -8,6 +8,7 @@ package com.hqyj.SpringBootDemo.modules.account.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hqyj.SpringBootDemo.modules.account.service.UserService;
@@ -87,5 +88,13 @@ public class AccountController {
 	@RequestMapping("/profile")
 	public String profilePage() {
 		return "index";
+	}
+
+	/**
+	 * http://127.0.0.1/account/vueTest ---- get
+	 */
+	@GetMapping("/vueTest")
+	public String vueTestPage() {
+		return "indexSimple";
 	}
 }
