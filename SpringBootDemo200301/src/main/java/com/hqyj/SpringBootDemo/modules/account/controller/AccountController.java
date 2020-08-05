@@ -97,4 +97,12 @@ public class AccountController {
 	public String vueTestPage() {
 		return "indexSimple";
 	}
+	
+	/**
+	 * http://127.0.0.1/account/registerVue ---- get
+	 */
+	@GetMapping("/registerVue")
+	public String registVuePage() {
+		return "indexSimple";
+	}
 }

@@ -14,13 +14,15 @@
     test_1: <input type="button" v-on:click="test_1()" value="test_1"><br>
     test_2: <input type="button" @click="test_2()" value="test_2"><br>
     <h3>Vue 组件</h3>
-    简单组件：<button-demo></button-demo>
-    计数组件：<button-count></button-count>
+	简单组件：<button-demo></button-demo>
+	计数组件：<button-count></button-count>
 </div>
 <script type="text/javascript">
+	// 全局注册组件
     Vue.component("button-demo", {
         template: "<button>11111</button>",
     });
+	// 全局注册组件
     Vue.component("button-count", {
         // 定义数据，注意是一个函数，返回数据
         data: function() {
