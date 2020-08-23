@@ -46,16 +46,51 @@
 			userName: "",
 			password: "",
 		},
+		created: function() {
+			this.getUser();
+		},
 		methods: {
 			register: function() {
-				// 阻止元素发生默认行为
-				event.preventDefault();
 				if(!this.userName.trim()) {
 					alert("请输入名字");
 					return;
 				}
-				alert("cdsca");
+				
+				var user = {};
+				user.userName = this.userName;
+				user.password = this.password;
+				$.ajax({
+					url : "/api/user",
+					type : "post",
+					contentType: "application/json",
+					data : JSON.stringify(user),
+					success : function (data) {
+						if (data.status == 200) {
+							alert("Register success.");
+						} else {
+							layer.msg(data.message, {icon: 0});
+						}
+					},
+					error : function (data) {
+						layer.msg(data.responseText, {icon: 0});
+					}
+				});
 			},
+			getUser: function() {
+				var me = this;
+				$.ajax({
+					url : "/api/user/1",
+					type : "get",
+					contentType: "application/json",
+					success : function (rs) {
+						me.userName = rs.userName;
+						me.password = rs.password;
+					},
+					error : function (data) {
+						layer.alert(data.responseText, {icon: 0});
+					}
+				});
+			}
 		},
 	});
 </script>
