@@ -17,7 +17,7 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "paper")
-public class Pager {
+public class Paper {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;

@@ -1,5 +1,6 @@
 package com.hqyj.SpringBootDemo.modules.exam.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,15 +18,19 @@ public class Question {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String content;
 	// 单选题、多选题、填空题、简答题、编程题
 	private String type;
 	// JavaSE、JavaEE、Spring、SpringBoot、SpringCloud、PythonBase、PythonSpider……
 	private String flag;
-	private double score;
+	private Double score;
+	private String content;
+	@Column(name = "option_a")
 	private String optionA;
+	@Column(name = "option_b")
 	private String optionB;
+	@Column(name = "option_c")
 	private String optionC;
+	@Column(name = "option_d")
 	private String optionD;
 	private String referenceAnswer;
 	private String comment;
@@ -36,14 +41,6 @@ public class Question {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
 	}
 
 	public String getType() {
@@ -62,12 +59,20 @@ public class Question {
 		this.flag = flag;
 	}
 
-	public double getScore() {
+	public Double getScore() {
 		return score;
 	}
 
-	public void setScore(double score) {
+	public void setScore(Double score) {
 		this.score = score;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public String getOptionA() {
