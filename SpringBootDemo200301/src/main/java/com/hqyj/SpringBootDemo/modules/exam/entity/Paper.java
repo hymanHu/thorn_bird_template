@@ -23,6 +23,7 @@ public class Paper {
 	private int id;
 	private String subject;
 	private LocalDateTime createDate;
+	private Integer totalTime;
 	@Transient
 	private List<Question> questions;
 
@@ -56,5 +57,13 @@ public class Paper {
 
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
+	}
+
+	public Integer getTotalTime() {
+		return totalTime;
+	}
+
+	public void setTotalTime(Integer totalTime) {
+		this.totalTime = totalTime;
 	}
 }
