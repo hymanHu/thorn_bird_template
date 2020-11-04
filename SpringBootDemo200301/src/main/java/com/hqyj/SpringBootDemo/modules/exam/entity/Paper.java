@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * Description: 试卷
  * @author HymanHu
@@ -22,8 +24,9 @@ public class Paper {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String subject;
-	private LocalDateTime createDate;
 	private Integer totalTime;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	private LocalDateTime createDate;
 	@Transient
 	private List<Question> questions;
 
@@ -43,6 +46,14 @@ public class Paper {
 		this.subject = subject;
 	}
 
+	public Integer getTotalTime() {
+		return totalTime;
+	}
+
+	public void setTotalTime(Integer totalTime) {
+		this.totalTime = totalTime;
+	}
+
 	public LocalDateTime getCreateDate() {
 		return createDate;
 	}
@@ -57,13 +68,5 @@ public class Paper {
 
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
-	}
-
-	public Integer getTotalTime() {
-		return totalTime;
-	}
-
-	public void setTotalTime(Integer totalTime) {
-		this.totalTime = totalTime;
 	}
 }
